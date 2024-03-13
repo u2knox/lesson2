@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Post from './components/Post';
+import Comment from './components/Comment';
+
+export default function App() {
+  const [color, setColor] = useState('teal');
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    console.log("newval " + color + " " + visible)
+    return () => {
+      console.log("oldval " + color + " " + visible)
+    }
+  }, [color, visible]);
+
+  return (<>
+    <select value={color} onChange={(e) => setColor(e.target.value)}>
+      <option value="teal">Teal</option>
+      <option value="red">Red</option>
+      <option value="yellow">Yellow</option>
+      <option value="brown">Brown</option>
+    </select>
+    <Post color={color} width={0}>
+      <button onClick={() => setVisible(!visible)}>Hide/show</button>
+      {visible && <Comment />}
+    </Post>
+  </>)
 }
-
-export default App;
